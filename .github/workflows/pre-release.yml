@@ -47,11 +47,13 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
 
+      - run: cd ../     
+
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
-          type: "tar"
-          filename: "${{ env.REPOSITORY_NAME }}-latest.tar.gz"
+          type: "zip"
+          filename: "${{ env.REPOSITORY_NAME }}-latest.zip"
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
       - name: Pre-Release
@@ -61,4 +63,4 @@ jobs:
           generate_release_notes: true
           tag_name: 'latest'
           files: |
-            ${{ env.REPOSITORY_NAME }}-latest.tar.gz
+            ${{ env.REPOSITORY_NAME }}-latest.zip
