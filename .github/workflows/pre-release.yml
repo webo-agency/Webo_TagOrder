@@ -51,7 +51,7 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: "zip"
-          filename: "${{ env.REPOSITORY_NAME }}-${{ github.sha }}.zip"
+          filename: "${{ env.REPOSITORY_NAME }}-latest.zip"
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
       - name: Pre-Release
@@ -61,4 +61,4 @@ jobs:
           generate_release_notes: true
           tag_name: 'latest'
           files: |
-            ${{ env.REPOSITORY_NAME }}-${{ github.sha }}.zip
+            ${{ env.REPOSITORY_NAME }}-latest.zip
