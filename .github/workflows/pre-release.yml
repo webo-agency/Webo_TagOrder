@@ -36,14 +36,14 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        uses: php-actions/composer@v6
+        uses: php-actions/composer@v5
         with:
           command: composer install --prefer-dist
           php_version: 7.3
           version: 2
 
       - name: Dump autoloader
-        uses: php-actions/composer@v6
+        uses: php-actions/composer@v5
         with:
           command: composer dump-autoload -o --no-dev
           php_version: 7.3
