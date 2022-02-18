@@ -47,7 +47,7 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
 
-      - run: cd ../     
+      - run: mv ./* ./${{ env.REPOSITORY_NAME }}    
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
