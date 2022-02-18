@@ -35,19 +35,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
 
-      - name: Install dependencies
+      - name: Build composer
         uses: php-actions/composer@v5
         with:
-          command: composer install --prefer-dist
           php_version: 7.3
           version: 2
 
-      - name: Dump autoloader
-        uses: php-actions/composer@v5
-        with:
-          command: composer dump-autoload -o --no-dev
-          php_version: 7.3
-          version: 2
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Dump dependencies
+        run: composer dump-autoload -o --no-dev
 
       - name: Archive Release
         uses: thedoctor0/zip-release@master
