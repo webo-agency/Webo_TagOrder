@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
-          command: composer install --prefer-dist && composer dump-autoload -o --no-dev
+          command: composer install --prefer-dist
           php_version: "7.3"
           version: 2
 
