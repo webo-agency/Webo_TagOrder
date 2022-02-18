@@ -1,0 +1,5 @@
+webo_tagorder_config:
+    path: webo_tagorder/config
+    methods: [GET]
+    defaults:
+      _controller: 'Webo_TagOrder\Controller\AdminWeboTagOrderController::initContent'
