@@ -16,12 +16,16 @@ jobs:
     permissions:
       contents: write
 
+    defaults:
+      run:
+        working-directory: ./${{ env.REPOSITORY_NAME }}
+        
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2.3.4"
         with:
           lfs: true
-          path: '${{ env.REPOSITORY_NAME }}'
+          path: './${{ env.REPOSITORY_NAME }}'
 
       - run: echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
         shell: bash
@@ -48,11 +52,12 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist  
 
+      - run: cd ../
+      
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
           type: "zip"
-          directory: ${{ github.workspace }}
           filename: "${{ env.REPOSITORY_NAME }}-latest.zip"
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
