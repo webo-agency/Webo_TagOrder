@@ -16,16 +16,11 @@ jobs:
     permissions:
       contents: write
 
-    defaults:
-      run:
-        working-directory: ./${{ env.REPOSITORY_NAME }}
-        
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2.3.4"
         with:
           lfs: true
-          path: './${{ env.REPOSITORY_NAME }}'
 
       - run: echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
         shell: bash
@@ -67,4 +62,4 @@ jobs:
           generate_release_notes: true
           tag_name: 'latest'
           files: |
-            ${{ env.REPOSITORY_NAME }}-latest.zip
+            ../${{ env.REPOSITORY_NAME }}-latest.zip
