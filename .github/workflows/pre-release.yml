@@ -61,4 +61,4 @@ jobs:
           generate_release_notes: true
           tag_name: 'latest'
           files: |
-            ${{ env.REPOSITORY_NAME }}-latest..tar.gz
+            ${{ env.REPOSITORY_NAME }}-latest.tar.gz
