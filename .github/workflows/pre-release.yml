@@ -44,9 +44,6 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist
 
-      - name: Dump dependencies
-        run: composer dump-autoload -o --no-dev
-
       - name: Archive Release
         uses: thedoctor0/zip-release@master
         with:
