@@ -349,9 +349,9 @@ class MySQL extends AbstractAdapter
                 $tagProductsIds = array_column($tagProducts,"id_product");
     
                 if(count($tagProductsIds) > 1){
-                    $orderField = 'CASE WHEN p.id_product = ' . join(' OR p.id_product = ',$tagProductsIds) . ' THEN 999 ELSE p.position END ';
+                    $orderField = 'CASE WHEN p.id_product = ' . join(' OR p.id_product = ', $tagProductsIds) . ' THEN SUM(p.position + 999) ELSE p.position END ';
                 } else if(count($tagProductsIds) == 1){
-                    $orderField = 'CASE WHEN p.id_product = ' . join('',$tagProductsIds) . ' THEN 999 ELSE p.position END ';
+                    $orderField = 'CASE WHEN p.id_product = ' . join('',$tagProductsIds) . ' THEN SUM(p.position + 999) ELSE p.position END ';
                 }
     
             }    
