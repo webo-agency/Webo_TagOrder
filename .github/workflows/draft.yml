@@ -1,10 +1,19 @@
 ---
-name: "Pre-Release"
+name: Draft
 
 on:
   push:
+    # branches to consider in the event; optional, defaults to all
     branches:
-      - "main"
+      - master
+  # pull_request event is required only for autolabeler
+  pull_request:
+    # Only following types are handled by the action, but one can default to all as well
+    types: [opened, reopened, synchronize]
+  # pull_request_target event is required for autolabeler to support PRs from forks
+  # pull_request_target:
+  #   types: [opened, reopened, synchronize]
+
 
 env:
   REPO_NAME: ${{ github.event.repository.name }}
@@ -55,11 +64,10 @@ jobs:
           filename: "${{ env.REPOSITORY_NAME }}-latest.zip"
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
-      - name: Pre-Release
-        uses: softprops/action-gh-release@v1
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          prerelease: true
-          generate_release_notes: true
-          tag_name: 'latest'
-          files: |
-            ../${{ env.REPOSITORY_NAME }}-latest.zip
+         config-name: 'release-drafter.yml'
+         tag_name: 'draft'
+         upload_url: ../${{ env.REPOSITORY_NAME }}-latest.zip
