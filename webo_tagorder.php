@@ -111,13 +111,20 @@ public function displayForm()
     $form = [
         'form' => [
             'legend' => [
-                'title' => $this->l('Ustawienia'),
+                'title' => $this->l('Settings'),
             ],
             'input' => [
                 [
                     'type' => 'text',
-                    'label' => $this->l('Wybrany tag'),
+                    'label' => $this->l('Selected tag'),
                     'name' => 'WEBO_TAGORDER_TAG',
+                    'size' => 20,
+                    'required' => true,
+                ],
+                [
+                    'type' => 'text',
+                    'label' => $this->l('Max position'),
+                    'name' => 'WEBO_TAGORDER_SORTMAX',
                     'size' => 20,
                     'required' => true,
                 ],
@@ -143,6 +150,8 @@ public function displayForm()
 
     // Load current value into the form
     $helper->fields_value['WEBO_TAGORDER_TAG'] = Tools::getValue('WEBO_TAGORDER_TAG', Configuration::get('WEBO_TAGORDER_TAG'));
+    $helper->fields_value['WEBO_TAGORDER_SORTMAX'] = Tools::getValue('WEBO_TAGORDER_SORTMAX', Configuration::get('WEBO_TAGORDER_SORTMAX'));
+    
 
     return $helper->generateForm([$form]);
 }
@@ -164,7 +173,7 @@ public function displayForm()
         // check that the value is valid
         if (empty($configValue) || !Validate::isGenericName($configValue)) {
             // invalid value, show an error
-            $output = $this->displayError($this->l('Invalid Configuration value'));
+            $output = $this->displayError($this->l('Invalid values'));
         } else {
             // value is ok, update it and display a confirmation message
             Configuration::updateValue('WEBO_TAGORDER_TAG', $configValue);
