@@ -57,6 +57,14 @@ jobs:
           filename: "${{ env.REPOSITORY_NAME }}-draft.zip"
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+         config-name: 'release-drafter.yml'
+         tag: 'draft'
+         upload_url: ${{ steps.archive_release.outputs.upload_url }}
+
       - name: Archive Release
         id: archive_release
         run: |
@@ -66,10 +74,3 @@ jobs:
           VERSION: 'draft'
           FILES: ../${{ env.REPOSITORY_NAME }}-draft.zip
           
-      - uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-         config-name: 'release-drafter.yml'
-         tag: 'draft'
-         upload_url: ${{ steps.archive_release.outputs.upload_url }}
