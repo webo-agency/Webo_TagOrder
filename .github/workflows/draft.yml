@@ -49,18 +49,27 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist   
       
-      - name: Archive Release
+      - name: Archive Generate
         uses: thedoctor0/zip-release@master
         with:
           type: "zip"
           directory: "../"
-          filename: "${{ env.REPOSITORY_NAME }}-latest.zip"
+          filename: "${{ env.REPOSITORY_NAME }}-draft.zip"
           exclusions: '*.git* /*node_modules/* .editorconfig'
 
+      - name: Archive Release
+        id: archive_release
+        run: |
+          gh release upload --clobber ${{ env.VERSION }} ${{ env.FILES }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: 'draft'
+          FILES: ../${{ env.REPOSITORY_NAME }}-draft.zip
+          
       - uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
          config-name: 'release-drafter.yml'
-         tag_name: 'draft'
-         upload_url: ../${{ env.REPOSITORY_NAME }}-latest.zip
+         tag: 'draft'
+         upload_url: ${{ steps.archive_release.outputs.upload_url }}
